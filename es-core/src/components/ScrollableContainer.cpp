@@ -20,14 +20,14 @@ void ScrollableContainer::render(const Eigen::Affine3f& parentTrans)
 	Eigen::Vector3f dimScaled = trans * Eigen::Vector3f(mSize.x(), mSize.y(), 0);
 	Eigen::Vector2i clipDim((int)dimScaled.x() - trans.translation().x(), (int)dimScaled.y() - trans.translation().y());
 
-	Renderer::pushClipRect(clipPos, clipDim);
+//	Renderer::pushClipRect(clipPos, clipDim);
 
 	trans.translate(-Eigen::Vector3f(mScrollPos.x(), mScrollPos.y(), 0));
 	Renderer::setMatrix(trans);
 
 	GuiComponent::renderChildren(trans);
 
-	Renderer::popClipRect();
+//	Renderer::popClipRect();
 }
 
 void ScrollableContainer::setAutoScroll(bool autoScroll)

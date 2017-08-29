@@ -52,7 +52,7 @@ void IGameListView::render(const Eigen::Affine3f& parentTrans)
 	Eigen::Vector2i pos(trans.translation()[0], trans.translation()[1]);
 	Eigen::Vector2i size(mSize.x() * scaleX, mSize.y() * scaleY);
 
-	Renderer::pushClipRect(pos, size);
+//	Renderer::pushClipRect(pos, size);
 	renderChildren(trans);
-	Renderer::popClipRect();
+//	Renderer::popClipRect();
 }

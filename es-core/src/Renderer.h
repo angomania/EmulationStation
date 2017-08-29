@@ -26,6 +26,7 @@ namespace Renderer
 	//graphics commands
 	void swapBuffers();
 
+	void pushClipRect(Eigen::Vector2i pos, Eigen::Vector2i dim, Eigen::Affine3f& transform);
 	void pushClipRect(Eigen::Vector2i pos, Eigen::Vector2i dim);
 	void popClipRect();
 

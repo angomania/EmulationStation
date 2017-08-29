@@ -226,6 +226,13 @@ void Window::render()
 {
 	Eigen::Affine3f transform = Eigen::Affine3f::Identity();
 
+	if (Settings::getInstance()->getBool("Vertical"))
+	{
+		transform.translate(Eigen::Vector3f(Renderer::getScreenWidth() * -0.5, Renderer::getScreenWidth() * -0.5, 0.0f));
+		transform *= Eigen::AngleAxisf(M_PI / -2, Eigen::Vector3f::UnitZ());
+		transform.translate(Eigen::Vector3f(Renderer::getScreenWidth() * 0.5, Renderer::getScreenWidth() * 0.5, 0.0f));
+	}
+
 	mRenderedHelpPrompts = false;
 
 	// draw only bottom and top of GuiStack (if they are different)

@@ -180,8 +180,8 @@ void TextListComponent<T>::render(const Eigen::Affine3f& parentTrans)
 	// clip to inside margins
 	Eigen::Vector3f dim(mSize.x(), mSize.y(), 0);
 	dim = trans * dim - trans.translation();
-	Renderer::pushClipRect(Eigen::Vector2i((int)(trans.translation().x() + mHorizontalMargin), (int)trans.translation().y()), 
-		Eigen::Vector2i((int)(dim.x() - mHorizontalMargin*2), (int)dim.y()));
+//	Renderer::pushClipRect(Eigen::Vector2i((int)(trans.translation().x() + mHorizontalMargin), (int)trans.translation().y()),
+//		Eigen::Vector2i((int)(dim.x() - mHorizontalMargin*2), (int)dim.y()));
 
 	for(int i = startEntry; i < listCutoff; i++)
 	{
@@ -230,7 +230,7 @@ void TextListComponent<T>::render(const Eigen::Affine3f& parentTrans)
 		y += entrySize;
 	}
 
-	Renderer::popClipRect();
+//	Renderer::popClipRect();
 
 	listRenderTitleOverlay(trans);
 

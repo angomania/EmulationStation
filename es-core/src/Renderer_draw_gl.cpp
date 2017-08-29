@@ -7,6 +7,7 @@
 #include "Log.h"
 #include <stack>
 #include "Util.h"
+#include "Settings.h"
 
 namespace Renderer {
 	std::stack<Eigen::Vector4i> clipStack;
@@ -29,13 +30,27 @@ namespace Renderer {
 		}
 	}
 
+
+	void pushClipRect(Eigen::Vector2i pos, Eigen::Vector2i dim, Eigen::Affine3f& transform)
+	{
+		pushClipRect(pos, dim);
+	}
+
 	void pushClipRect(Eigen::Vector2i pos, Eigen::Vector2i dim)
 	{
 		Eigen::Vector4i box(pos.x(), pos.y(), dim.x(), dim.y());
+
+//		LOG(LogError) << "clipRect: " << box[0] << " " << box[1] << " " << box[2] << " " << box[3];
+
+		if (Settings::getInstance()->getBool("Vertical"))
+		{
+//			LOG(LogError) << "clipRectRotated: " << box[0] << " " << box[1] << " " << box[2] << " " << box[3];
+		}
+
 		if(box[2] == 0)
-			box[2] = Renderer::getScreenWidth() - box.x();
+			box[2] = Renderer::getScreenWidth() - box[0];
 		if(box[3] == 0)
-			box[3] = Renderer::getScreenHeight() - box.y();
+			box[3] = Renderer::getScreenHeight() - box[1];
 
 		//glScissor starts at the bottom left of the window
 		//so (0, 0, 1, 1) is the bottom left pixel

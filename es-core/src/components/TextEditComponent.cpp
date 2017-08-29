@@ -253,7 +253,7 @@ void TextEditComponent::render(const Eigen::Affine3f& parentTrans)
 	Eigen::Vector2i clipPos((int)trans.translation().x(), (int)trans.translation().y());
 	Eigen::Vector3f dimScaled = trans * Eigen::Vector3f(getTextAreaSize().x(), getTextAreaSize().y(), 0); // use "text area" size for clipping
 	Eigen::Vector2i clipDim((int)dimScaled.x() - trans.translation().x(), (int)dimScaled.y() - trans.translation().y());
-	Renderer::pushClipRect(clipPos, clipDim);
+//	Renderer::pushClipRect(clipPos, clipDim);
 
 	trans.translate(Eigen::Vector3f(-mScrollOffset.x(), -mScrollOffset.y(), 0));
 	trans = roundMatrix(trans);
@@ -266,7 +266,7 @@ void TextEditComponent::render(const Eigen::Affine3f& parentTrans)
 	}
 
 	// pop the clip early to allow the cursor to be drawn outside of the "text area"
-	Renderer::popClipRect();
+//	Renderer::popClipRect();
 
 	// draw cursor
 	if(mEditing)

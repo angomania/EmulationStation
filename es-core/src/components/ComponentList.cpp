@@ -167,8 +167,8 @@ void ComponentList::render(const Eigen::Affine3f& parentTrans)
 	// clip everything to be inside our bounds
 	Eigen::Vector3f dim(mSize.x(), mSize.y(), 0);
 	dim = trans * dim - trans.translation();
-	Renderer::pushClipRect(Eigen::Vector2i((int)trans.translation().x(), (int)trans.translation().y()),
-		Eigen::Vector2i((int)round(dim.x()), (int)round(dim.y() + 1)));
+//	Renderer::pushClipRect(Eigen::Vector2i((int)trans.translation().x(), (int)trans.translation().y()),
+//		Eigen::Vector2i((int)round(dim.x()), (int)round(dim.y() + 1)));
 
 	// scroll the camera
 	trans.translate(Eigen::Vector3f(0, -round(mCameraOffset), 0));
@@ -229,7 +229,7 @@ void ComponentList::render(const Eigen::Affine3f& parentTrans)
 	}
 	Renderer::drawRect(0.0f, y, mSize.x(), 1.0f, 0xC6C7C6FF);
 
-	Renderer::popClipRect();
+//	Renderer::popClipRect();
 }
 
 float ComponentList::getRowHeight(const ComponentListRow& row) const

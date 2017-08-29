@@ -415,7 +415,7 @@ void SystemView::renderCarousel(const Eigen::Affine3f& trans)
 	carouselTrans.translate(Eigen::Vector3f(mCarousel.origin.x() * mCarousel.size.x() * -1, mCarousel.origin.y() * mCarousel.size.y() * -1, 0.0f));
 
 	Eigen::Vector2f clipPos(carouselTrans.translation().x(), carouselTrans.translation().y());
-	Renderer::pushClipRect(clipPos.cast<int>(), mCarousel.size.cast<int>());
+//	Renderer::pushClipRect(clipPos.cast<int>(), mCarousel.size.cast<int>());
 
 	Renderer::setMatrix(carouselTrans);
 	Renderer::drawRect(0.0, 0.0, mCarousel.size.x(), mCarousel.size.y(), mCarousel.color);
@@ -503,7 +503,7 @@ void SystemView::renderCarousel(const Eigen::Affine3f& trans)
 		comp->setOpacity(opacity);
 		comp->render(logoTrans);
 	}
-	Renderer::popClipRect();
+//	Renderer::popClipRect();
 }
 
 void SystemView::renderInfoBar(const Eigen::Affine3f& trans)
@@ -520,7 +520,7 @@ void SystemView::renderExtras(const Eigen::Affine3f& trans, float lower, float u
 	// Adding texture loading buffers depending on scrolling speed and status
 	int bufferIndex = getScrollingVelocity() + 1;
 
-	Renderer::pushClipRect(Eigen::Vector2i::Zero(), mSize.cast<int>());
+//	Renderer::pushClipRect(Eigen::Vector2i::Zero(), mSize.cast<int>());
 
 	for (int i = extrasCenter + logoBuffersLeft[bufferIndex]; i <= extrasCenter + logoBuffersRight[bufferIndex]; i++)
 	{
@@ -539,8 +539,9 @@ void SystemView::renderExtras(const Eigen::Affine3f& trans, float lower, float u
 			else
 				extrasTrans.translate(Eigen::Vector3f(0, (i - mExtrasCamOffset) * mSize.y(), 0));
 
-			Renderer::pushClipRect(Eigen::Vector2i(extrasTrans.translation()[0], extrasTrans.translation()[1]),
-								   mSize.cast<int>());
+//			Renderer::pushClipRect(Eigen::Vector2i(extrasTrans.translation()[0], extrasTrans.translation()[1]),
+//								   mSize.cast<int>());
+//			Renderer::pushClipRect(Eigen::Vector2i::Zero(), mSize.cast<int>(), extrasTrans);
 			SystemViewData data = mEntries.at(index).data;
 			for (unsigned int j = 0; j < data.backgroundExtras.size(); j++) {
 				GuiComponent *extra = data.backgroundExtras[j];
@@ -548,10 +549,10 @@ void SystemView::renderExtras(const Eigen::Affine3f& trans, float lower, float u
 					extra->render(extrasTrans);
 				}
 			}
-			Renderer::popClipRect();
+//			Renderer::popClipRect();
 		}
 	}
-	Renderer::popClipRect();
+//	Renderer::popClipRect();
 }
 
 void SystemView::renderFade(const Eigen::Affine3f& trans)

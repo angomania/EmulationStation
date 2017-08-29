@@ -45,6 +45,9 @@ bool parseArgs(int argc, char* argv[], unsigned int* width, unsigned int* height
 			*width = atoi(argv[i + 1]);
 			*height = atoi(argv[i + 2]);
 			i += 2; // skip the argument value
+        }else if(strcmp(argv[i], "--vertical") == 0)
+        {
+            Settings::getInstance()->setBool("Vertical", true);
 		}else if(strcmp(argv[i], "--gamelist-only") == 0)
 		{
 			Settings::getInstance()->setBool("ParseGamelistOnly", true);

@@ -67,10 +67,13 @@ void SystemView::populate()
 			text->applyTheme((*it)->getTheme(), "system", "logoText", ThemeFlags::FONT_PATH | ThemeFlags::FONT_SIZE | ThemeFlags::COLOR | ThemeFlags::FORCE_UPPERCASE);
 			e.data.logo = std::shared_ptr<GuiComponent>(text);
 
-			if (mCarousel.type == VERTICAL || mCarousel.type == VERTICAL_WHEEL)
+			if (mCarousel.type == VERTICAL || mCarousel.type == VERTICAL_WHEEL) {
 				text->setHorizontalAlignment(mCarousel.logoAlignment);
-			else
+				text->setVerticalAlignment(ALIGN_CENTER);
+			} else {
 				text->setVerticalAlignment(mCarousel.logoAlignment);
+				text->setHorizontalAlignment(ALIGN_CENTER);
+			}
 		}
 
 		if (mCarousel.type == VERTICAL || mCarousel.type == VERTICAL_WHEEL)
@@ -145,6 +148,7 @@ bool SystemView::input(InputConfig* config, Input input)
 			}
 			break;
 		case HORIZONTAL:
+		case HORIZONTAL_WHEEL:
 		default:
 			if (config->isMappedTo("left", input))
 			{
@@ -447,6 +451,15 @@ void SystemView::renderCarousel(const Eigen::Affine3f& trans)
 			else
 				xOff = (mCarousel.size.x() - mCarousel.logoSize.x()) / 2;
 			break;
+		case HORIZONTAL_WHEEL:
+			xOff = (mCarousel.size.x() - mCarousel.logoSize.x()) / 2 - (mCamOffset * logoSpacing[1]);
+			if (mCarousel.logoAlignment == ALIGN_TOP)
+				yOff = mCarousel.logoSize.y() / 10;
+			else if (mCarousel.logoAlignment == ALIGN_BOTTOM)
+				yOff = mCarousel.size.y() - (mCarousel.logoSize.y() * 1.1);
+			else
+				yOff = (mCarousel.size.y() - mCarousel.logoSize.y()) / 2;
+			break;
 		case HORIZONTAL:
 		default:
 			logoSpacing[0] = ((mCarousel.size.x() - (mCarousel.logoSize.x() * mCarousel.maxLogoCount)) / (mCarousel.maxLogoCount)) + mCarousel.logoSize.x();
@@ -495,7 +508,7 @@ void SystemView::renderCarousel(const Eigen::Affine3f& trans)
 		opacity = std::max((int) 0x80, opacity);
 
 		const std::shared_ptr<GuiComponent> &comp = mEntries.at(index).data.logo;
-		if (mCarousel.type == VERTICAL_WHEEL) {
+		if (mCarousel.type == VERTICAL_WHEEL || mCarousel.type == HORIZONTAL_WHEEL) {
 			comp->setRotationDegrees(mCarousel.logoRotation * distance);
 			comp->setRotationOrigin(mCarousel.logoRotationOrigin);
 		}
@@ -605,6 +618,8 @@ void SystemView::getCarouselFromTheme(const ThemeData::ThemeElement* elem)
 			mCarousel.type = VERTICAL;
 		else if (!(elem->get<std::string>("type").compare("vertical_wheel")))
 			mCarousel.type = VERTICAL_WHEEL;
+		else if (!(elem->get<std::string>("type").compare("horizontal_wheel")))
+			mCarousel.type = HORIZONTAL_WHEEL;
 		else
 			mCarousel.type = HORIZONTAL;
 	}
